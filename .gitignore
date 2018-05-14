@@ -139,6 +139,7 @@ target/
 .settings/
 .classpath
 .project
+/FinalProject/out
 
 # NetBeans specific
 nbproject/private/
@@ -158,3 +159,8 @@ nb-configuration.xml
 release.properties
 pom.xml.releaseBackup
 pom.xml.tag
+
+# IntelliJ Mat
+FinalProject/.idea
+FinalProject/FinalProject.iml	
+FinalProject/out/
