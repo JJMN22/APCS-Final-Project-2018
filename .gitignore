@@ -160,8 +160,3 @@ release.properties
 pom.xml.releaseBackup
 pom.xml.tag
 
-# IntelliJ Mat
-FinalProject/.idea
-FinalProject/FinalProject.iml	
-FinalProject/out/
-*.xml
