@@ -168,3 +168,5 @@ FinalProject/FinalProject.iml
 FinalProject/out/
 >>>>>>> 2b40a1b92579e5e069dbd4c78a60b7421d013e74
 FinalProject/.idea/workspace.xml
+*.xml
+*.xml
