@@ -1,10 +1,6 @@
 package FinalProject.Squares.Units;
-import FinalProject.GameBoard.Map;
 import FinalProject.Squares.*;
 import javax.swing.ImageIcon;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Knight extends Troop {
     private ImageIcon redIcon = new ImageIcon(getClass().getResource("redStar.png"));
