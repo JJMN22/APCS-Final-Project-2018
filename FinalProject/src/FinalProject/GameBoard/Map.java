@@ -9,14 +9,11 @@ package FinalProject.GameBoard;/*Changelog
 
 import FinalProject.Squares.Square;
 import FinalProject.Squares.*;
-import FinalProject.Squares.Units.King;
+import FinalProject.Squares.Units.*;
 
 import javax.swing.JPanel;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 import javax.swing.BorderFactory;
-import java.awt.Color;
-
 
 
 public class Map extends JPanel{
@@ -27,12 +24,17 @@ public class Map extends JPanel{
 	
 	public static int blueMana = 100;
 	public static int redMana = 100;
-	
+
+	public static final Color backgroundColor=null;
+	public static final Color moveToColor=Color.YELLOW;
+	public static final Color selectedColor=new Color(148,0,211);
+	public static final Color attackColor=Color.RED;
     public static final int SIZE = 9;
     public static Square[][] gameMap = new Square[SIZE][SIZE];
     public static Square selected;
+
     
-    //Constructor, Initalizes UI
+    //Constructor, Initializes UI
     public Map(){
         for(int i = 0;i < SIZE; i++){
             for(int j = 0; j< SIZE; j++){
@@ -41,6 +43,7 @@ public class Map extends JPanel{
         }
         gameMap[2][2] = new King(2, 2, false);
         gameMap[1][1] = new King(1, 1, true);
+        gameMap[5][5] = new Knight(5,5,true);
         initializeUI();
     }
     //Initializes UI by placing buttons on JPanel
@@ -56,12 +59,74 @@ public class Map extends JPanel{
         setBorder(BorderFactory.createEtchedBorder(Color.BLACK,Color.ORANGE));
         setVisible(true);
     }
-    
+    //Redraws the Map
+    public void updateButtons() {
+        this.removeAll();
+        for (int i = 0; i < Map.SIZE; i++) {
+            for (int j = 0; j < Map.SIZE; j++){
+                gameMap[i][j].setOpaque(true);
+                gameMap[i][j].setBackground(backgroundColor);
+                /* If Statements check three cases
+                * 1: SELECTED does exist
+                * 2: SELECTED is the Square that is clicked; SELECTED's color is changed to selectedColor
+                * 3: A square besides SELECTED is clicked and SELECTED is a Troop; color is changed accordingly
+                 */
+                if (selected!=null) { //make sure selected exists & selected is a troop
+                    if (selected == gameMap[i][j]) { //if gamemap[i][j] is Map.selected
+                        System.out.println(i + " " + j + " painting selected");
+                        selected.setBackground(selectedColor);
+                    } else { //thisSquare is created in case gamemap[i][j] is a Grass object.
+                        if (selected instanceof Troop){ //
+                            Troop selectedTroop = (Troop) selected;
+                            Square thisSquare = gameMap[i][j];
+                            int thisX = (int) gameMap[i][j].position.getX();
+                            int thisY = (int) gameMap[i][j].position.getY();
+                            if (selectedTroop.canMove(thisX,thisY)) { //if gameMap[i][j] is in selectedTroop's movement pattern
+                                if (!thisSquare.occupiedBySameTeam(selectedTroop)||!thisSquare.isOccupied()) {
+                                    if (gameMap[i][j] instanceof Troop){
+                                        gameMap[i][j].setBackground(attackColor);
+                                    } else {
+                                        gameMap[i][j].setBackground(moveToColor);
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                Map.gameMap[i][j].setFocusable(false);
+                this.add(gameMap[i][j]);
+            }
+        }
+        this.validate();
+        this.repaint();
+    }
+
+    //destroys a Square and replaces it with another
+    public static Square destroy(Square sq){
+        Point pos = sq.getPosition();
+        int xPos = (int) pos.getX();
+        int yPos = (int) pos.getY();
+        Map.gameMap[xPos][yPos] = new Grass(null, xPos, yPos);
+        return Map.gameMap[xPos][yPos];
+    }
+    //increments round number
     public void nextRound(){
     	for(int i = 0; i< SIZE; i++){
     		for(int j = 0; j < SIZE; j++){
     			roundNumber++;
     		}
     	}
+    }
+    //toString method prints out selected Tile for debugging purposes
+    public String toString(){
+        if (selected!=null){
+            int x = (int) selected.position.getX();
+            int y = (int) selected.position.getY();
+            boolean j = selected instanceof Troop;
+            return "Selected Tile position: "+x+" "+y+"; selected tile instanceof Troop: "+j;
+        } else {
+            return "No selected tile";
+        }
     }
 }

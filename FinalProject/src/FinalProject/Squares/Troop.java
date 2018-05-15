@@ -1,6 +1,5 @@
 package FinalProject.Squares;
 import FinalProject.GameBoard.Map;
-import FinalProject.EventHandling.Auxilliary;
 
 
 import javax.swing.*;
@@ -42,7 +41,11 @@ public abstract class Troop extends Square{
     }
      */
 
-	public abstract boolean canMove(Square target);
+	public abstract boolean canMove(Square target); //if Troop can move to the target square
+	public abstract boolean canMove(int x, int y);
+	public boolean canAttack(Troop target){ //if Troop can attack the target square
+		return !occupiedBySameTeam(target);
+	}
 
 	public void move(Square target) {
 		int targetX = (int) target.getPosition().getX();
@@ -50,8 +53,12 @@ public abstract class Troop extends Square{
 
 		if (this.canMove(target)){
 			if (target instanceof Troop){
+				System.out.println("is instanceof troop");
 				Troop enemy = (Troop) target;
-				move(attack(enemy));
+				if (canAttack(enemy)){
+					System.out.println("attacking enemy");
+					move(attack(enemy));
+				}
 			} else {
 				Troop temp = this;
 				Point oldPosition = position;
@@ -67,7 +74,8 @@ public abstract class Troop extends Square{
 
 	//Attacks squares, returns the destroyed square
 	public Square attack(Troop enemy){
-		return Auxilliary.destroy(enemy);
+		System.out.println("Destroying enemy");
+		return Map.destroy(enemy);
 	}
 
 	//Constructor

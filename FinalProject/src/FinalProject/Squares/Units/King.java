@@ -18,10 +18,14 @@ public class King extends Troop {
         }
     }
     public boolean canMove(Square target){
-        double distance = distance(this,target);
+        double distance = distance(target);
         if(distance <= Math.sqrt(2)){
             return true;
         }
         return false;
+    }
+    public boolean canMove(int x, int y){
+        Square target = new Square(null, x, y);
+        return canMove(target);
     }
 }

@@ -13,7 +13,7 @@ public class Board extends JFrame{
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setTitle("Hey noob");
+        setTitle("Boardgame");
         setSize(Square.SQUARE_LENGTH*Map.SIZE+200,Square.SQUARE_LENGTH*Map.SIZE);
         add(infobar, BorderLayout.NORTH);
         add(map, BorderLayout.CENTER);

@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 
 //Simple Square whose child classes will tile the V2.Map
-public abstract class Square extends JButton {
+public class Square extends JButton {
     //length of side of square
     public static final int SQUARE_LENGTH = 71;
     //Point class to store x position and y position within map; position is initialized in V2.Map.java
@@ -19,22 +19,22 @@ public abstract class Square extends JButton {
     }
 
     //Utility Methods
-    public double distance(Square s1, Square s2){
-        double X1 = s1.position.getX();
-        double Y1 = s1.position.getY();
-        double X2 = s2.position.getX();
-        double Y2 = s2.position.getY();
+    public double distance(Square s){
+        double X1 = s.position.getX();
+        double Y1 = s.position.getY();
+        double X2 = this.position.getX();
+        double Y2 = this.position.getY();
         double xDist = X1-X2;
         double yDist = Y1-Y2;
         //Distance Formula
         double distance = Math.sqrt(Math.pow(xDist,2) + Math.pow(yDist,2));
         return distance;
     }
-    public double xDist(Square s1, Square s2){
-        return Math.abs(s1.position.getX()-s2.position.getX());
+    public double xDist(Square s){
+        return Math.abs(this.position.getX()-s.position.getX());
     }
-    public double yDist(Square s1, Square s2){
-        return Math.abs(s1.position.getY()-s2.position.getY());
+    public double yDist(Square s){
+        return Math.abs(this.position.getY()-s.position.getY());
     }
     //If square is occupied
     public boolean isOccupied(){
@@ -58,6 +58,7 @@ public abstract class Square extends JButton {
         this.addMouseListener(clickHandler);
         this.setIcon(icon);
     }
+
 
     //Accessor methods
     public Point getPosition(){

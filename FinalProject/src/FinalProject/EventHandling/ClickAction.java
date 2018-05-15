@@ -31,8 +31,8 @@ public class ClickAction extends MouseAdapter {
                     Map.selected=null;
                 }
             }
-
         }
-        Auxilliary.updateButtons(Board.map);
+        System.out.println(Board.map);
+        Board.map.updateButtons();
     }
 }
