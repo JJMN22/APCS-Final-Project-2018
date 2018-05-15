@@ -73,7 +73,6 @@ public class Map extends JPanel{
                  */
                 if (selected!=null) { //make sure selected exists & selected is a troop
                     if (selected == gameMap[i][j]) { //if gamemap[i][j] is Map.selected
-                        System.out.println(i + " " + j + " painting selected");
                         selected.setBackground(selectedColor);
                     } else { //thisSquare is created in case gamemap[i][j] is a Grass object.
                         if (selected instanceof Troop){ //

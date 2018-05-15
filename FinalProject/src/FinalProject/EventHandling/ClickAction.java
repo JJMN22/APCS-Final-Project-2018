@@ -27,12 +27,15 @@ public class ClickAction extends MouseAdapter {
                 } //Automatically deselects after calling move, whether troop has moved or not
                 else if (Map.selected instanceof Troop) {
                     Troop tempSelected = (Troop) Map.selected;
-                    tempSelected.move(sq);
-                    Map.selected=null;
+                    if (tempSelected.canMove(sq)){
+                        tempSelected.move(sq);
+                        Map.selected=null;
+                    }
+                } else {
+                    Map.selected = sq;
                 }
             }
         }
-        System.out.println(Board.map);
         Board.map.updateButtons();
     }
 }

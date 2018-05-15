@@ -53,10 +53,8 @@ public abstract class Troop extends Square{
 
 		if (this.canMove(target)){
 			if (target instanceof Troop){
-				System.out.println("is instanceof troop");
 				Troop enemy = (Troop) target;
 				if (canAttack(enemy)){
-					System.out.println("attacking enemy");
 					move(attack(enemy));
 				}
 			} else {
@@ -74,7 +72,6 @@ public abstract class Troop extends Square{
 
 	//Attacks squares, returns the destroyed square
 	public Square attack(Troop enemy){
-		System.out.println("Destroying enemy");
 		return Map.destroy(enemy);
 	}
 

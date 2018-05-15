@@ -9,7 +9,7 @@ import java.awt.*;
 //Simple Square whose child classes will tile the V2.Map
 public class Square extends JButton {
     //length of side of square
-    public static final int SQUARE_LENGTH = 71;
+    public static final int SQUARE_LENGTH = 79;
     //Point class to store x position and y position within map; position is initialized in V2.Map.java
     public Point position = new Point(0,0);
 
