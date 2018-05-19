@@ -72,7 +72,15 @@ public abstract class Troop extends Square{
 
 	//Attacks squares, returns the destroyed square
 	public Square attack(Troop enemy){
-		return Map.destroy(enemy);
+		return enemy.beDestroyed();
+	}
+
+	//destroys a Square and replaces it with another
+	public Square beDestroyed(){
+		int xPos = this.fetchX();
+		int yPos = this.fetchY();
+		Map.gameMap[xPos][yPos] = new Grass(null, xPos, yPos);
+		return Map.gameMap[xPos][yPos];
 	}
 
 	//Constructor

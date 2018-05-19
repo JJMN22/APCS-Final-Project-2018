@@ -14,7 +14,7 @@ public class Board extends JFrame{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setTitle("Boardgame");
-        setSize(Square.SQUARE_LENGTH*Map.SIZE+200,Square.SQUARE_LENGTH*Map.SIZE);
+        setSize(Square.SQUARE_LENGTH*(Map.SIZE+3),Square.SQUARE_LENGTH*Map.SIZE);
         add(infobar, BorderLayout.NORTH);
         add(map, BorderLayout.CENTER);
         add(infobar, BorderLayout.LINE_START);

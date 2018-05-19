@@ -16,23 +16,26 @@ public class ClickAction extends MouseAdapter {
             System.out.println("my name jefff");
         } else if (SwingUtilities.isLeftMouseButton(e)) {
             //selects a tile
-            if (Map.selected == null) {
-                int xPos = (int) sq.getPosition().getX();
-                int yPos = (int) sq.getPosition().getY();
-                Map.selected = Map.gameMap[xPos][yPos];
-            } else {
-                //Deselects if Square is selected
-                if (Map.selected == sq) {
+            if (Map.selected != null) { //selected exists
+                if (Map.selected == sq) { //selected is clicked
                     Map.selected = null;
-                } //Automatically deselects after calling move, whether troop has moved or not
+                } //selected is a troop and a player clicks on a different tile
                 else if (Map.selected instanceof Troop) {
                     Troop tempSelected = (Troop) Map.selected;
                     if (tempSelected.canMove(sq)){
                         tempSelected.move(sq);
                         Map.selected=null;
+                        Map.nextRound();
                     }
-                } else {
+                } else { //selected is a Grass tile and the player clicks on a different tile
                     Map.selected = sq;
+                }
+            } else { //selected doesn't exist
+                //either [sq is not a troop] or [sq is on the correct team to move]
+                if (!(sq instanceof Troop) || ((Troop) sq).getTeam()==Map.turnToMove()) {
+                    int xPos = (int) sq.getPosition().getX();
+                    int yPos = (int) sq.getPosition().getY();
+                    Map.selected = Map.gameMap[xPos][yPos];
                 }
             }
         }

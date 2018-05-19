@@ -5,8 +5,11 @@ package FinalProject.GameBoard;/*Changelog
  *Version 1.2 - (Mathew) Fixing up Henry's code in Troop.java
  *Version 1.3 - (Henry) Adding random things to Troop class, possibly revamping?
  * Version 1.4 - (Mathew) Moving event handling over to Auxillary and ClickAction classes
+ * Version 1.5 - (Mathew) Implementing turns and turnhandling, redesigning Clickaction, Redesigning Board
  */
-
+/*
+*Todo: redesign Map so GUI and handling are two separate classes, make teams String based and not boolean based, add dropping
+ */
 import FinalProject.Squares.Square;
 import FinalProject.Squares.*;
 import FinalProject.Squares.Units.*;
@@ -71,7 +74,7 @@ public class Map extends JPanel{
                 * 2: SELECTED is the Square that is clicked; SELECTED's color is changed to selectedColor
                 * 3: A square besides SELECTED is clicked and SELECTED is a Troop; color is changed accordingly
                  */
-                if (selected!=null) { //make sure selected exists & selected is a troop
+                if (selected!=null) { //make sure selected exists
                     if (selected == gameMap[i][j]) { //if gamemap[i][j] is Map.selected
                         selected.setBackground(selectedColor);
                     } else { //thisSquare is created in case gamemap[i][j] is a Grass object.
@@ -100,22 +103,20 @@ public class Map extends JPanel{
         this.validate();
         this.repaint();
     }
-
-    //destroys a Square and replaces it with another
-    public static Square destroy(Square sq){
-        Point pos = sq.getPosition();
-        int xPos = (int) pos.getX();
-        int yPos = (int) pos.getY();
-        Map.gameMap[xPos][yPos] = new Grass(null, xPos, yPos);
-        return Map.gameMap[xPos][yPos];
-    }
     //increments round number
-    public void nextRound(){
+    public static void nextRound(){
     	for(int i = 0; i< SIZE; i++){
     		for(int j = 0; j < SIZE; j++){
     			roundNumber++;
     		}
     	}
+    }
+    //return whose turn it is to move
+    public static boolean turnToMove(){
+        if (roundNumber%2==0){
+            return true;
+        }
+        return false;
     }
     //toString method prints out selected Tile for debugging purposes
     public String toString(){
@@ -123,9 +124,9 @@ public class Map extends JPanel{
             int x = (int) selected.position.getX();
             int y = (int) selected.position.getY();
             boolean j = selected instanceof Troop;
-            return "Selected Tile position: "+x+" "+y+"; selected tile instanceof Troop: "+j;
+            return "Selected Tile position: "+x+" "+y+"; selected tile instanceof Troop: "+j+"; roundNumber ="+roundNumber;
         } else {
-            return "No selected tile";
+            return "No selected tile"+"; roundNumber ="+roundNumber;
         }
     }
 }

@@ -12,18 +12,21 @@ public class Square extends JButton {
     public static final int SQUARE_LENGTH = 79;
     //Point class to store x position and y position within map; position is initialized in V2.Map.java
     public Point position = new Point(0,0);
+    public int X = 0, Y = 0;
 
     //sets position
     public void setPosition(int i, int j){
         position.setLocation(i,j);
+        X = i;
+        Y = j;
     }
 
     //Utility Methods
     public double distance(Square s){
-        double X1 = s.position.getX();
-        double Y1 = s.position.getY();
-        double X2 = this.position.getX();
-        double Y2 = this.position.getY();
+        double X1 = s.fetchX();
+        double Y1 = s.fetchY();
+        double X2 = this.fetchX();
+        double Y2 = this.fetchY();
         double xDist = X1-X2;
         double yDist = Y1-Y2;
         //Distance Formula
@@ -31,10 +34,10 @@ public class Square extends JButton {
         return distance;
     }
     public double xDist(Square s){
-        return Math.abs(this.position.getX()-s.position.getX());
+        return Math.abs(this.fetchX()-s.fetchX());
     }
     public double yDist(Square s){
-        return Math.abs(this.position.getY()-s.position.getY());
+        return Math.abs(this.fetchY()-s.fetchY());
     }
     //If square is occupied
     public boolean isOccupied(){
@@ -53,7 +56,7 @@ public class Square extends JButton {
     //Constructor
     public Square(ImageIcon icon, int xPos, int yPos) {
         super("");
-        position.setLocation(xPos,yPos);
+        setPosition(xPos,yPos);
         ClickAction clickHandler = new ClickAction();
         this.addMouseListener(clickHandler);
         this.setIcon(icon);
@@ -63,5 +66,11 @@ public class Square extends JButton {
     //Accessor methods
     public Point getPosition(){
         return this.position;
+    }
+    public int fetchX(){ //getX is already a method in JButton
+        return X;
+    }
+    public int fetchY(){ //getY is already a method in JButton
+        return Y;
     }
 }
