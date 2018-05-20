@@ -40,13 +40,56 @@ public abstract class Troop extends Square{
     	}
     }
      */
-
-    public abstract boolean canMove(Square target); //if Troop can move to the target square
-    public abstract boolean canMove(int x, int y);
+    
+    public boolean canMove(Square otherSquare){
+		switch(this.type){
+			//tier 1
+			case "SWORDSMAN":
+				return isInRange(otherSquare, 2);
+			case "ARCHER":
+				return isInRange(otherSquare, 2);
+			case "HORSEMAN":
+				return isLShaped(otherSquare);
+			case "SCOUT":
+				return isInRange(otherSquare, 3);
+			//tier 2
+			case "LONGSWORDSMAN":
+				return isLinearMove(otherSquare, 3);
+			case "CROSSBOW":
+				return isQueenMove(otherSquare, 3);
+			case "KNIGHT":
+				return isLShaped(otherSquare, 3);
+			case "EXPLORER":
+				return isInRange(otherSquare, 4);
+			//tier 3
+			case "MUSKETEER":
+				return isLinearMove(otherSquare, 4);
+			case "FIELD_CANNON":
+				return isQueenMove(otherSquare, 3);
+			case "CAVALRY":
+				return (isDiagonalMove(otherSquare, 4) || isLShaped(otherSquare, 5));
+			case "HUNTER":
+				return isInRange(otherSquare, 4);
+			//tier 4
+			case "INFANTRY":
+				return isQueenMove(otherSquare, 4);
+			case "BAZOOKA":
+				return isInRange(otherSquare, 3);
+			case "TANK":
+				return (isDiagonalMove(otherSquare, 6) || isLShaped(otherSquare, 6));
+			case "SPY":
+				return isInRange(otherSquare, 5);
+		}
+	}
+    
+    //public abstract boolean canMove(Square target); //if Troop can move to the target square
+    //public abstract boolean canMove(int x, int y);
     public boolean canAttack(Troop target){ //if Troop can attack the target square
         return !occupiedBySameTeam(target);
     }
-
+    
+    //need to add is ranged
+    //move method is also the attack method
     public void move(Square target) {
         int targetX = (int) target.getPosition().getX();
         int targetY = (int) target.getPosition().getY();
@@ -84,6 +127,7 @@ public abstract class Troop extends Square{
     }
 
     //Constructor
+    //NEED to ADD : String type. Do this later
     public Troop(ImageIcon icon, int xPos, int yPos, boolean team){
         super(icon,xPos,yPos);
         this.team = team;
