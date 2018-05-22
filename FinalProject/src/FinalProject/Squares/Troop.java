@@ -4,6 +4,7 @@ import FinalProject.GameBoard.Map;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.Math;
 
 public abstract class Troop extends Square{
 
@@ -40,7 +41,6 @@ public abstract class Troop extends Square{
     	}
     }
      */
-
     public abstract boolean canMove(Square target); //if Troop can move to the target square
     public abstract boolean canMove(int x, int y);
     public boolean canAttack(Troop target){ //if Troop can attack the target square
@@ -113,7 +113,7 @@ public abstract class Troop extends Square{
 
     //like a bishop in chess
     public boolean isDiagonalMove(Square otherSquare, int range){
-        if(abs(xDistance(otherSquare)) == abs(yDistance(otherSquare))){
+        if(Math.abs(xDistance(otherSquare)) == abs(yDistance(otherSquare))){
             if(abs(xDistance(otherSquare)) <= range){
                 return true;
             }
@@ -124,8 +124,9 @@ public abstract class Troop extends Square{
     //like a rook in chess
     public boolean isLinearMove(Square otherSquare, int range){
         if(xDistance(otherSquare) <= range && yDistance(otherSquare) <= range){
-            return(xDistance(otherSquare) == 0 || yDistnace(otherSquare) == 0);
+            return(xDistance(otherSquare) == 0 || yDistance(otherSquare) == 0);
         }
+        return false;
     }
 
     //like a knight in chess
@@ -159,14 +160,14 @@ public abstract class Troop extends Square{
     }
 
     public boolean isOccupied(Square otherSquare){
-        if(otherSqure instanceof Troop){
-            return truel
+        if(otherSquare instanceof Troop){
+            return true;
         }
         return false;
     }
 
     public boolean occupiedBySameTeam(Square otherSquare){
-        if(otherSqure instanceof Troop){
+        if(otherSquare instanceof Troop){
             if(otherSquare.team == this.team){
                 return true;
             }
@@ -175,13 +176,34 @@ public abstract class Troop extends Square{
     }
 
     public boolean occupiedByDifferentTeam(Square otherSquare){
-        if(otherSqure instanceof Troop){
+        if(otherSquare instanceof Troop){
             if(otherSquare.team != this.team){
                 return true;
             }
         }
         return false;
     }
+	public void move(Square target) {
+		int targetX = (int) target.getPosition().getX();
+		int targetY = (int) target.getPosition().getY();
 
+		if (this.canMove(target)){
+			if (target instanceof Troop){
+				Troop enemy = (Troop) target;
+				if (canAttack(enemy)){
+					move(attack(enemy));
+				}
+			} else {
+				Troop temp = this;
+				Point oldPosition = position;
+				int xPos = (int) oldPosition.getX();
+				int yPos = (int) oldPosition.getY();
+				Map.gameMap[targetX][targetY] = temp;
+				Map.gameMap[targetX][targetY].setPosition(targetX,targetY);
+				Map.gameMap[xPos][yPos] = new Grass(null,xPos, yPos);
+				Map.gameMap[xPos][yPos].setPosition(xPos,yPos);
+			}
+		}
+	}
 
 }

@@ -10,8 +10,8 @@ public class InfoBar extends JPanel{
         initializeUI();
     }
     private void initializeUI(){
-        setLayout(new GridBagLayout());
-        setPreferredSize(new Dimension(3*Square.SQUARE_LENGTH, Square.SQUARE_LENGTH*Map.SIZE));
+        setLayout(new GroupLayout(this));
+        setPreferredSize(new Dimension(200, Square.SQUARE_LENGTH*Map.SIZE));
         setBorder(BorderFactory.createEtchedBorder(Color.BLACK,Color.ORANGE));
         setVisible(true);
     }
