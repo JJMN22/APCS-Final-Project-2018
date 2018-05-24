@@ -2,15 +2,15 @@ package FinalProject.Squares.Units;
 import FinalProject.Squares.*;
 import javax.swing.ImageIcon;
 
-public class Sniper extends Troop {
-    private ImageIcon redIcon = new ImageIcon(getClass().getResource("redSniper.png"));
-    private ImageIcon blueIcon = new ImageIcon(getClass().getResource("blueSniper.png"));
+public class Archer extends Troop {
+    private ImageIcon redIcon = new ImageIcon(getClass().getResource("redArcher.png"));
+    private ImageIcon blueIcon = new ImageIcon(getClass().getResource("blueArcher.png"));
     
-    int health = 200;
-    int damage = 75;
-    int cost = 200;
+    int health = 70;
+    int damage = 35;
+    int cost = 50;
     
-    public Sniper(int xPos, int yPos, boolean team){
+    public Archer(int xPos, int yPos, boolean team){
         super(null, xPos, yPos, team);
         if (team){
             this.setIcon(redIcon);
@@ -20,11 +20,8 @@ public class Sniper extends Troop {
     }
     
     public boolean canMove(Square target){
-        if(xDist(target) + yDist(target) <= 4){
+        if(xDist(target) + yDist(target) <= 2){
             return true;
-        }
-        else if(xDist(target) == yDist(target) && xDist(target) <= 6){
-        	return true;
         }
         else{
         	return false;
@@ -37,7 +34,7 @@ public class Sniper extends Troop {
     }
     
     public boolean canAttack(Troop target){
-    	if(xDist(target) + yDist(target) <= 3){
+    	if(xDist(target) + yDist(target) <= 2){
     		if(occupiedBySameTeam(target) == false){
     			return true;
     		}

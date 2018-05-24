@@ -5,6 +5,11 @@ import javax.swing.ImageIcon;
 public class Tank extends Troop {
     private ImageIcon redIcon = new ImageIcon(getClass().getResource("redTank.png"));
     private ImageIcon blueIcon = new ImageIcon(getClass().getResource("blueTank.png"));
+    
+    int health = 500;
+    int damage = 175;
+    int cost = 450;
+    
     public Tank(int xPos, int yPos, boolean team){
         super(null, xPos, yPos, team);
         if (team){
@@ -26,5 +31,12 @@ public class Tank extends Troop {
     public boolean canMove(int x, int y){
         Square target = new Square(null, x, y);
         return canMove(target);
+    }
+    
+    public boolean attack(Troop enemy){
+    	enemy.health = enemy.health - damage;
+    	if(enemy.health <= 0){
+    		enemy.beDestroyed();
+    	}
     }
 }
